@@ -1,0 +1,23 @@
+<div class="form-control">
+  <h3>Tabla de trabajos</h3>
+</div>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+     {{#each jobs}}
+    <tr>
+      <th scope="row">{{col1 }}</th>
+      <td>{{col2 }}</td>
+      <td>{{col3 }}</td>
+      <td>{{col4 }}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
