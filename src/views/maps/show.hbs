@@ -1,5 +1,15 @@
 
-<div id="mapid" style="width: 600px; height: 400px;" ></div>
+<div class="row" >
+	<div class="col col-lg-6" id="mapid" style="height: 600px;" ></div>
+	<div class="col">
+		<h3>Seleccione un item para redireccionar el mapa</h3>
+		<ul class="list-group">
+		{{#each jsonValue}}
+				<a class="list-group-item list-group-item-action" id="marker_{{@index }}" >Nombre: {{name}} => Ubicacion: {{point}} </a>
+		{{/each}}
+		</ul>
+	</div>
+</div>
 
 <script>
 
@@ -13,5 +23,31 @@
 		tileSize: 512,
 		zoomOffset: -1
 	}).addTo(mymap);
+	var markers = [];	
+	{{#each jsonValue}}
+		markers.push(L.marker([{{point}}], {
+  		title: "marker_{{@index }}"
+		  }
+		).addTo(mymap).bindPopup("{{name}} ").on('click', clickZoom));
+	{{/each}}
+
+function markerFunction(id) {
+  for (var i in markers) {
+    var markerID = markers[i].options.title;
+    var position = markers[i].getLatLng();
+    if (markerID == id) {
+    	mymap.setView(position, 15);
+      markers[i].openPopup();
+    };
+  }
+}
+
+$("a").click(function() {
+  markerFunction($(this)[0].id);
+});
+
+function clickZoom(e) {
+	mymap.setView(e.target.getLatLng(),15);
+}
 
 </script>

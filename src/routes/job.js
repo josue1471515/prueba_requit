@@ -1,17 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const { isLoggedIn } = require('../lib/auth');
+const { GetJobs: getJobs } = require('../lib/api');
 
-router.get('/show', (req, res) => {
-
-    const jobs = [
-        { col1: "valo1", col2: "valo2", col3: "valo3", col4: "valo4" },
-        { col1: "valo1", col2: "valo2", col3: "valo3", col4: "valo4" },
-        { col1: "valo1", col2: "valo2", col3: "valo3", col4: "valo4" },
-        { col1: "valo1", col2: "valo2", col3: "valo3", col4: "valo4" },
-        { col1: "valo1", col2: "valo2", col3: "valo3", col4: "valo4" },
-
-    ]
-    res.render('jobs/show', { jobs });
+router.get('/show', isLoggedIn, (req, res) => {
+    getJobs(req, res)
 });
 
 module.exports = router;

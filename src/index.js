@@ -32,14 +32,9 @@ app.use((req, res, next) => {
 
 var expiryDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 app.use(session({
-    name: 'session',
-    keys: ['key1', 'key2'],
-    cookie: {
-        secure: true,
-        domain: 'localhost',
-        path: '/',
-        expires: expiryDate
-    }
+    secret: 'faztmysqlnodemysql',
+    resave: false,
+    saveUninitialized: false,
 }));
 
 app.use(passport.initialize());
