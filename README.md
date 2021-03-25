@@ -1,7 +1,5 @@
 # Prueba de programación
 
-El proyecto esta echo en 
-
 
 ### Pre-requisitos 📋
 ```
