@@ -23,14 +23,19 @@
 		tileSize: 512,
 		zoomOffset: -1
 	}).addTo(mymap);
-	var markers = [];	
+	var markers = [];
+	var sw = false;
 	{{#each jsonValue}}
+		if(!sw){
+			sw = true;
+			mymap.setView([{{point}}], 13);
+		}
+
 		markers.push(L.marker([{{point}}], {
   		title: "marker_{{@index }}"
 		  }
 		).addTo(mymap).bindPopup("{{name}} ").on('click', clickZoom));
 	{{/each}}
-
 function markerFunction(id) {
   for (var i in markers) {
     var markerID = markers[i].options.title;

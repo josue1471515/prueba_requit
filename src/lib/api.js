@@ -1,7 +1,4 @@
 const axios = require('axios');
-const config = {
-    headers: { Authorization: `Bearer asda` }
-};
 
 const { guardarUsuario } = require('../repo/user.repo');
 
@@ -9,65 +6,68 @@ const { guardarUsuario } = require('../repo/user.repo');
 module.exports = {
     async authUser(username, password, done) {
         try {
+            axios({
+                    method: 'post',
+                    url: 'https://coding-test.rootstack.net/api/auth/login',
+                    headers: {},
+                    data: { email: username, password: password }
+                }).then(({ data }) => {
 
-            //remove
-            user = {
-                username: username,
-                password: "password",
-                email: "josue@gmail.com",
-            };
+                    if (data.error != "") {
+                        user = {
+                            username: username,
+                            email: username,
+                            password: password,
+                            token: data.access_token
+                        }
 
-            await guardarUsuario(user);
-
-            done(null, user);
-            //remove
-
-            // axios.post("https://jsonplaceholder.typicode.com/users", { username: username, password: password }, config)
-            //     .then(({ data }) => {
-            //         user = {
-            //             username: data.name,
-            //             password: data.password
-            //         };
-
-            //         if (existUser(user.username)) {
-            //             done(null, user);
-            //         } else {
-            //             done(null, false);
-            //         }
-            //         return data;
-            //     })
-            //     .catch(error => {
-            //         done(null, false);
-            //         console.log(error);
-            //     });
+                        guardarUsuario(user);
+                        done(null, user);
+                    } else {
+                        done(null, false);
+                    }
+                    return data;
+                })
+                .catch(error => {
+                    done(null, false);
+                    console.log(error);
+                });
         } catch (error) {
             done(null, false);
             console.log(error);
         }
     },
-    GetJobs(req, res) {
-
-        //remove
-        const jobs = [
-            { col1: "valo1", col2: "valo2", col3: "valo3", col4: "valo4" },
-            { col1: "valo1", col2: "valo2", col3: "valo3", col4: "valo4" },
-            { col1: "valo1", col2: "valo2", col3: "valo3", col4: "valo4" },
-            { col1: "valo1", col2: "valo2", col3: "valo3", col4: "valo4" },
-            { col1: "valo1", col2: "valo2", col3: "valo3", col4: "valo4" },
-
-        ]
-        res.render('jobs/show', { jobs });
-        return;
-        //remove
-
-        axios.get("https://jsonplaceholder.typicode.com/users")
+    getJobs(token, res, redirectv) {
+        axios.get("http://coding-test.rootstack.net/api/jobs", {
+                headers: { Authorization: `Bearer ` + token }
+            })
             .then(({ data }) => {
-
-                return data;
+                let jobs = []
+                data.data.forEach(element => {
+                    jobs.push({ col1: element.title, col2: element.description, col3: element.image, col4: element.date }, )
+                });
+                res.render(redirectv, { jobs });
             })
             .catch(error => {
                 console.log(error);
             });
+
+    },
+    getPoinst(token, res, redirectv) {
+        axios.get("http://coding-test.rootstack.net/api/jobs", {
+                headers: { Authorization: `Bearer ` + token }
+            })
+            .then(({ data }) => {
+                let jsonValue = []
+                data.data.forEach(element => {
+                    jsonValue.push({ name: element.title, point: [element.latitude, element.longitude] }, )
+                });
+                res.render(redirectv, { jsonValue });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
     }
 
 };

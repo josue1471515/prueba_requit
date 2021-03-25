@@ -11,6 +11,6 @@ module.exports = {
         }
     },
     async getUser(username) {
-        return await pool.query("select * from users where username = ?", [username]);
+        return await pool.query("select * from users where email = ?", [username]);
     }
 }
