@@ -21,3 +21,5 @@ MariaDB
 ![alt text](https://github.com/josue1471515/prueba_requit/blob/master/info/2.png)
 
 ![alt text](https://github.com/josue1471515/prueba_requit/blob/master/info/3.png)
+
+![alt text](https://github.com/josue1471515/prueba_requit/blob/master/info/4.png)
