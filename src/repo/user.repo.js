@@ -6,7 +6,7 @@ module.exports = {
         if (exist[0].exite == 0) {
             await pool.query("insert into users set ?", user)
         } else {
-            user.token = "value token";
+            user.token = user.token;
             await pool.query('UPDATE users set ? WHERE username = ?', [user, user.username]);
         }
     },
